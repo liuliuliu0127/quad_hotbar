@@ -96,24 +96,21 @@ public abstract class InGameHudMixin {
 		// ---- 攻击指示器（进度条模式）绘制 ----
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.options.getAttackIndicator().getValue() == AttackIndicator.HOTBAR) {
-			// 1. 计算冷却进度
-			float cooldown = player.getAttackCooldownProgress(1.0F);
-			int indicatorX = rightX + 182 + 8;
-			int indicatorY = bottomY + 9 ; // 与物品垂直对齐 
+			float cooldown = player.getAttackCooldownProgress(0.0F);
+			if (cooldown < 1.0F) {
+				int indicatorX = rightX + 182 + 6;  // 右快捷栏右边缘 + 间距
+				int indicatorY = context.getScaledWindowHeight() - 20 - DHModConfig.INSTANCE.shift;
 
-			// 4. 绘制进度条（从下往上）
-			if (cooldown > 0.0F) {
-				//context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HOTBAR_ATTACK_INDICATOR_BACKGROUND_TEXTURE,indicatorX, indicatorY, 9, 9);
-				int progressHeight = (int) (18.0F * cooldown); // 进度条总高18像素
-				// 纹理从底部开始绘制，Y坐标需要根据进度向上偏移
-				int progressY = indicatorY + 9 - progressHeight; 
-				//context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HOTBAR_ATTACK_INDICATOR_BACKGROUND_TEXTURE, indicatorX, indicatorY -9 , 18, 18);
-				
-				// 开启裁剪，只绘制纹理的下半部分
-				context.enableScissor(indicatorX - 4, (cooldown < 1.0f) ? progressY : indicatorY + 9, indicatorX + 14, indicatorY + 9);
-				// 以底部对齐的方式绘制完整的18x18纹理，裁剪会自动隐藏上半部分
-				context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HOTBAR_ATTACK_INDICATOR_PROGRESS_TEXTURE, indicatorX - 4, indicatorY - 9, 18, 18);
-				context.disableScissor();
+				int progressHeight = (int)(cooldown * 19.0F);
+				// 背景 (18x18)
+				context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HOTBAR_ATTACK_INDICATOR_BACKGROUND_TEXTURE,
+						indicatorX, indicatorY, 18, 18);
+				// 进度条 (从下往上)
+				context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HOTBAR_ATTACK_INDICATOR_PROGRESS_TEXTURE,
+						18, 18,                                      // 纹理尺寸
+						0, 18 - progressHeight,                      // UV 起点
+						indicatorX, indicatorY + 18 - progressHeight, // 屏幕绘制位置
+						18, progressHeight);
 			}
 		}
 	}
