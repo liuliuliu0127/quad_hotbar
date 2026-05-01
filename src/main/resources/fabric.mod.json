@@ -3,10 +3,12 @@
   "id": "double_hotbar",
   "version": "${version}",
 
-  "name": "Double Hotbar",
-  "description": "Adds a second hotbar that displays the third row of the inventory on the HUD. This provides a dual hotbar setup where you can easily swap/hotswap/cycle which of the two hotbars is active.",
+  "name": "Quad Hotbar",
+  "description": "Modified version of Double Hotbar Mod which adds more than two hotbars that displays the third row of the inventory on the HUD. ",
   "authors": [
-    "sidezbros"
+    "sidezbros",
+    "liuliuliu0127",
+    "deepseek"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/double-hotbar",

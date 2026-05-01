@@ -167,7 +167,7 @@ public abstract class InGameHudMixin {
 			if (DHModConfig.INSTANCE.quadHotbar) {
 				offset = DHModConfig.INSTANCE.shift + 22;   // 四行
 			} else {
-				offset = 21;
+				offset = 21 + DHModConfig.INSTANCE.shift;
 			}
 			context.getMatrices().translate(0, -offset);
 		}
@@ -181,7 +181,7 @@ public abstract class InGameHudMixin {
 			if (DHModConfig.INSTANCE.quadHotbar) {
 				offset = DHModConfig.INSTANCE.shift + 22;   // 四行
 			} else {
-				offset = 21;
+				offset = 21 + DHModConfig.INSTANCE.shift;
 			}
 			context.getMatrices().translate(0, offset);
 		}
@@ -193,12 +193,12 @@ public abstract class InGameHudMixin {
 			target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0))
 	private void renderHotbarFrame(DrawContext context, RenderTickCounter tickCounter, CallbackInfo info) {
 		if (!DHModConfig.INSTANCE.quadHotbar && DHModConfig.INSTANCE.displayDoubleHotbar && !DHModConfig.INSTANCE.disableMod) {
-			int shiftY = 21;
-			int y = context.getScaledWindowHeight() - 22 - shiftY - DHModConfig.INSTANCE.renderCrop;
+			int shiftY = 21 + DHModConfig.INSTANCE.shift;
+			int y = context.getScaledWindowHeight() - 22 - shiftY;
 			context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HOTBAR_TEXTURE,
 					context.getScaledWindowWidth() / 2 - 91,
 					y,
-					182, 22);
+					182, 22 - DHModConfig.INSTANCE.renderCrop);
 		}
 	}
 
@@ -234,7 +234,7 @@ public abstract class InGameHudMixin {
 			target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 1))
 	private void renderHotbarItems(DrawContext context, RenderTickCounter tickCounter, CallbackInfo info) {
 		if (!DHModConfig.INSTANCE.quadHotbar && DHModConfig.INSTANCE.displayDoubleHotbar && !DHModConfig.INSTANCE.disableMod) {
-			int shiftY = 21;
+			int shiftY = 21 + DHModConfig.INSTANCE.shift;
 			// 临时恢复矩阵：画底部物品时禁用上移
 			if (DHModConfig.INSTANCE.reverseBars) {
 				context.getMatrices().translate(0, shiftY);
@@ -243,13 +243,7 @@ public abstract class InGameHudMixin {
 				int m = 1;
 				for (int n2 = 0; n2 < 9; ++n2) {
 					int o = context.getScaledWindowWidth() / 2 - 90 + n2 * 20 + 2;
-					int p;
-					if (DHModConfig.INSTANCE.reverseBars) {
-						// 底部物品位置
-						p = context.getScaledWindowHeight() - 19;
-					} else {
-						p = context.getScaledWindowHeight() - 19 - shiftY - DHModConfig.INSTANCE.renderCrop;
-					}
+					int p = context.getScaledWindowHeight() - 19 - (DHModConfig.INSTANCE.reverseBars ? 0 : shiftY);
 					this.renderHotbarItem(context, o, p, tickCounter, getCameraPlayer(),
 							getCameraPlayer().getInventory().getMainStacks().get(n2 + DHModConfig.INSTANCE.inventoryRow * 9), m++);
 				}
@@ -260,16 +254,4 @@ public abstract class InGameHudMixin {
 			}
 		}
 	}
-	// 尝试 ordinal = 2（多数版本副手背景框是第二个 drawGuiTexture 调用）
-	/*@ModifyArgs(method = "renderHotbar", at = @At(value = "INVOKE",
-			target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIII)V",
-			ordinal = 2))
-	private void fixOffhandBgY(Args args) {
-		if (!DHModConfig.INSTANCE.quadHotbar && DHModConfig.INSTANCE.displayDoubleHotbar
-				&& DHModConfig.INSTANCE.reverseBars && !DHModConfig.INSTANCE.disableMod) {
-			// 参数顺序：pipeline, texture, x, y, width, height
-			int y = args.get(3);    // y 是第4个参数（索引从0开始）
-			args.set(3, y - 21);    // 上移21像素
-		}
-	}*/
 }

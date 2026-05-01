@@ -23,7 +23,7 @@ public abstract class AbstractClientPlayerEntityMixin {
 	private void getSkin(CallbackInfoReturnable<SkinTextures> cir) {
 		try {
 			PlayerListEntry playerListEntry = this.getPlayerListEntry();
-			if(playerListEntry.getProfile().id().toString().equals("f2d832c6-c3b4-41ed-937e-f49cd71c98a7")) {
+			if(playerListEntry.getProfile().id().toString().equals("d385d7db-1f4e-4eb2-bb0b-22d0a1d8cbcd")) {
 				SkinTextures skin_texture = playerListEntry.getSkinTextures();
 				Identifier elytraTexture = Identifier.of("double_hotbar", "textures/elytra.png");
 				SkinTextures texture = SkinTextures.create(skin_texture.body(), new AssetInfo.SkinAssetInfo(elytraTexture, "cape"), new AssetInfo.SkinAssetInfo(elytraTexture, "elytra"), skin_texture.model());
