@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "double_hotbar",
+  "version": "${version}",
+
+  "name": "Double Hotbar",
+  "description": "Adds a second hotbar that displays the third row of the inventory on the HUD. This provides a dual hotbar setup where you can easily swap/hotswap/cycle which of the two hotbars is active.",
+  "authors": [
+    "sidezbros"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/double-hotbar",
+    "sources": "https://github.com/sidezbros/double_hotbar",
+    "issues": "https://github.com/sidezbros/double_hotbar/issues"
+  },
+
+  "license": "GPLv3",
+  "icon": "assets/double_hotbar/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.sidezbros.double_hotbar.DoubleHotbar"
+    ],
+    "modmenu": [
+        "com.sidezbros.double_hotbar.DHMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "double_hotbar.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.17.3",
+    "fabric-api": "*",
+    "minecraft": "~1.21.9",
+    "java": ">=21"
+  }
+}
