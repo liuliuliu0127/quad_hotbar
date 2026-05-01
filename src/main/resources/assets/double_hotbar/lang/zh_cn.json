@@ -4,7 +4,7 @@
   "subtitles.double_hotbar.woosh": "快捷栏：切换音效",
   "text.autoconfig.double_hotbar.option.disableMod": "禁用模组",
   "text.autoconfig.double_hotbar.option.displayDoubleHotbar": "显示额外快捷栏",
-  "text.autoconfig.double_hotbar.option.quadHotbar": "四行快捷栏模式",
+  "text.autoconfig.double_hotbar.option.quadHotbar": "四重快捷栏模式",
   "text.autoconfig.double_hotbar.option.quadHotbar.@Tooltip": "启用 2×2 四行快捷栏布局（将禁用双层模式）",
   "text.autoconfig.double_hotbar.option.inventoryRow": "选择背包行 (双层模式)",
   "text.autoconfig.double_hotbar.option.shift": "垂直位置",
