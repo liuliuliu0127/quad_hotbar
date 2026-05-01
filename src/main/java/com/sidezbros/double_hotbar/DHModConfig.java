@@ -37,6 +37,7 @@ public class DHModConfig implements ConfigData {
     public boolean holdToSwap = true;               // 启用按住 R 键交换
     public boolean holdToSwapBar = false;           // 长按 R 时交换整行
     public boolean allowDoubleTap = true;           // 允许双击数字键交换单格
+    public boolean useSwapForHotbar = true;         // 对涉及快捷栏的交换使用 SWAP（修复服务器空位失败），关闭则用原版 PICKUP
 
     @ConfigEntry.BoundedDiscrete(min = 50, max = 1000)
     public int holdTime = 200;                      // 长按判定时间（毫秒）

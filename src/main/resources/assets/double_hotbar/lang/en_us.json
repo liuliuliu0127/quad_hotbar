@@ -9,6 +9,7 @@
   "text.autoconfig.double_hotbar.option.inventoryRow": "Selected Inventory Row (Double HotBar Mode)",
   "text.autoconfig.double_hotbar.option.shift": "Vertical Position",
   "text.autoconfig.double_hotbar.option.allowDoubleTap": "Enable Double Tap",
+  "text.autoconfig.double_hotbar.option.useSwapForHotbar": "SWAP for Hotbar Exchanges",
   "text.autoconfig.double_hotbar.option.doubleTapWindow": "Double Tap Window (ms)",
   "text.autoconfig.double_hotbar.option.holdToSwap": "Enable Hold to Swap",
   "text.autoconfig.double_hotbar.option.holdTime": "Hold to Swap Time (ms)",

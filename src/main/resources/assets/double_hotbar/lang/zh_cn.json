@@ -9,6 +9,7 @@
   "text.autoconfig.double_hotbar.option.inventoryRow": "选择背包行 (双层模式)",
   "text.autoconfig.double_hotbar.option.shift": "垂直位置",
   "text.autoconfig.double_hotbar.option.allowDoubleTap": "启用双击",
+  "text.autoconfig.double_hotbar.option.useSwapForHotbar": "使用 SWAP 进行快捷栏交换",
   "text.autoconfig.double_hotbar.option.doubleTapWindow": "双击判定窗口 (毫秒)",
   "text.autoconfig.double_hotbar.option.holdToSwap": "启用长按交换",
   "text.autoconfig.double_hotbar.option.holdTime": "长按判定时间 (毫秒)",

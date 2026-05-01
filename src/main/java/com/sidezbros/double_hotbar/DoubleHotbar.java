@@ -326,6 +326,20 @@ public class DoubleHotbar implements ClientModInitializer {
         int screenSlotA = inventoryIndexToScreenSlot(slotA);
         int screenSlotB = inventoryIndexToScreenSlot(slotB);
 
+        // 如果启用了 SWAP，且一方是快捷栏（0~8），另一方是背包（9~35），则使用 SWAP
+        if (DHModConfig.INSTANCE.useSwapForHotbar) {
+            boolean aIsHotbar = (slotA >= 0 && slotA <= 8);
+            boolean bIsHotbar = (slotB >= 0 && slotB <= 8);
+            if (aIsHotbar != bIsHotbar) { // 一方快捷栏，一方背包
+                int hotbarSlot = aIsHotbar ? slotA : slotB;
+                int inventorySlot = aIsHotbar ? slotB : slotA;
+                int screenInventorySlot = aIsHotbar ? screenSlotB : screenSlotA;
+                // SWAP：点击背包槽位，热键栏编号 = hotbarSlot
+                client.interactionManager.clickSlot(syncId, screenInventorySlot, hotbarSlot, SlotActionType.SWAP, client.player);
+                return;
+            }
+        }
+
         // 标准的三次点击交换
         client.interactionManager.clickSlot(syncId, screenSlotA, 0, SlotActionType.PICKUP, client.player);
         client.interactionManager.clickSlot(syncId, screenSlotB, 0, SlotActionType.PICKUP, client.player);
