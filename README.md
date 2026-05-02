@@ -2,7 +2,7 @@
 Modified double hotbar mod that expands the HUD for more than 2 rows of hotbar.
 Currently supports Minecraft 1.17.1-1.21.11
 
-When quad hotbar enabled, use number 1~9 key to select left 9 hotbar slots, ctrl + 1~9 for the right side.
+When quad hotbar enabled, use number 1 to 9 key to select left 9 hotbar slots, ctrl + 1 to 9 for the right side.
 
 # Features
 1. Visually displays more rows of the inventory on the HUD. Health bar and experience bar are moved up to make space for the new "hotbar".
