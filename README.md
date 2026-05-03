@@ -111,7 +111,7 @@ The active row (where the selection highlight appears) switches dynamically betw
 You can change all keybindings in the **Options → Controls** menu. The modifier key used together with `1`–`9` and `R` is its own separate binding (`Quad Hotbar Modifier Key`).
 
 ### Installation
-1. Install **Fabric Loader** for Minecraft 1.17.1–1.21.11.
+1. Install **Fabric Loader** for Minecraft 1.21.9–1.21.11.
 2. Install **Fabric API** and **Cloth Config API**.
 3. Place the Quad Hotbar `.jar` file into your `mods` folder.
 4. Launch the game. If you have **Mod Menu**, you can access the configuration screen directly in-game.
