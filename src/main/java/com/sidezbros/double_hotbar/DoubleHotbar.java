@@ -39,6 +39,8 @@ public class DoubleHotbar implements ClientModInitializer {
     private boolean[] quadCtrlState = new boolean[9];
     private long[] timer = new long[10];
     private boolean alreadySwapped = false;
+    // --- 新增 ---
+    private boolean ctrlWhenRPressed = false;  // 记录按下 R 时是否按着 Ctrl
 
     public static final Identifier WOOSH_SOUND_ID = Identifier.of("double_hotbar", "woosh");
     private static final KeyBinding.Category KEYBIND_CATEGORY = KeyBinding.Category.create(Identifier.of("double_hotbar", "keybinds"));
@@ -59,17 +61,26 @@ public class DoubleHotbar implements ClientModInitializer {
             if (DHModConfig.INSTANCE.quadHotbar) {
                 // ========== 四行模式 ==========
                 if (DHModConfig.INSTANCE.holdToSwap) {
+                    boolean ctrlDown = GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS
+                            || GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS;
+
                     if (keyBinding.isPressed() != this.hotbarKeys[9]) {
                         this.hotbarKeys[9] = keyBinding.isPressed();
                         if (keyBinding.isPressed()) {
                             timer[9] = Instant.now().toEpochMilli();
+                            ctrlWhenRPressed = ctrlDown;   // 记录按下时的 Ctrl 状态
                         } else {
                             if (Instant.now().toEpochMilli() - timer[9] < DHModConfig.INSTANCE.holdTime) {
                                 // 短按
-                                if (DHModConfig.INSTANCE.holdToSwapBar) {
-                                    swapSelectedSlotWithAbove();   
+                                if (ctrlWhenRPressed) {
+                                    performCtrlShortSwap();
                                 } else {
-                                    onSwapKeyPressed();            
+                                    // 原有短按逻辑
+                                    if (DHModConfig.INSTANCE.holdToSwapBar) {
+                                        swapSelectedSlotWithAbove();
+                                    } else {
+                                        onSwapKeyPressed();
+                                    }
                                 }
                             } else {
                                 this.alreadySwapped = false;
@@ -79,16 +90,27 @@ public class DoubleHotbar implements ClientModInitializer {
                     if (!this.alreadySwapped && keyBinding.isPressed()
                             && Instant.now().toEpochMilli() - timer[9] > DHModConfig.INSTANCE.holdTime) {
                         // 长按
-                        if (!DHModConfig.INSTANCE.holdToSwapBar) {
-                            swapSelectedSlotWithAbove();          
+                        if (ctrlWhenRPressed) {
+                            performCtrlLongSwap();
                         } else {
-                            onSwapKeyPressed(); 
+                            // 原有长按逻辑
+                            if (DHModConfig.INSTANCE.holdToSwapBar) {
+                                onSwapKeyPressed();
+                            } else {
+                                swapSelectedSlotWithAbove();
+                            }
                         }
                         this.alreadySwapped = true;
                     }
                 } else {
                     while (keyBinding.wasPressed()) {
-                        onSwapKeyPressed();   // 关闭holdToSwap时，直接整行交换
+                        boolean ctrlDown = GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS
+                                || GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS;
+                        if (ctrlDown) {
+                            performCtrlShortSwap();
+                        } else {
+                            onSwapKeyPressed();
+                        }
                     }
                 }
                 // 双击数字键（四行模式用 swapSlotWithRowBelow）
@@ -253,6 +275,34 @@ public class DoubleHotbar implements ClientModInitializer {
         }
         swapSlots(sourceSlot, targetSlot);
         client.player.playSound(WOOSH_SOUND_EVENT, 0.01f * DHModConfig.INSTANCE.wooshVolume, 1f);
+    }
+
+        /**
+     * Ctrl + 短按 R：只交换真实快捷栏整行与对应的背包行
+     * 左真实：左下(0~8) ↔ 左上(18~26)
+     * 右真实：右下(0~8) ↔ 右上(9~17)
+     */
+    private void performCtrlShortSwap() {
+        if (leftIsRealHotbar) {
+            swapTwoEntireRows(0, 18);
+        } else {
+            swapTwoEntireRows(0, 9);
+        }
+        MinecraftClient.getInstance().player.playSound(WOOSH_SOUND_EVENT, 0.01f * DHModConfig.INSTANCE.wooshVolume, 1f);
+    }
+
+    /**
+     * Ctrl + 长按 R：只交换背包内部的两整行
+     * 左真实：最底层(27~35) ↔ 最顶层(9~17)
+     * 右真实：最底层(27~35) ↔ 中间层(18~26)
+     */
+    private void performCtrlLongSwap() {
+        if (leftIsRealHotbar) {
+            swapTwoEntireRows(27, 9);
+        } else {
+            swapTwoEntireRows(27, 18);
+        }
+        MinecraftClient.getInstance().player.playSound(WOOSH_SOUND_EVENT, 0.01f * DHModConfig.INSTANCE.wooshVolume, 1f);
     }
 
     private void handleQuadHotbarKeybinds(MinecraftClient client) {
