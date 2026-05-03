@@ -35,6 +35,7 @@ public class DoubleHotbar implements ClientModInitializer {
 
     // --- 原模组保留字段 ---
     private static KeyBinding keyBinding;
+    private static KeyBinding modifierKeyBinding;
     private boolean[] hotbarKeys = new boolean[10];
     private boolean[] quadCtrlState = new boolean[9];
     private long[] timer = new long[10];
@@ -51,6 +52,10 @@ public class DoubleHotbar implements ClientModInitializer {
         DHModConfig.init();
         Registry.register(Registries.SOUND_EVENT, WOOSH_SOUND_ID, WOOSH_SOUND_EVENT);
 
+        modifierKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.double_hotbar.modifier", InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_LEFT_CONTROL, KEYBIND_CATEGORY));
+
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.double_hotbar.swap", InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_R, KEYBIND_CATEGORY));
@@ -61,9 +66,7 @@ public class DoubleHotbar implements ClientModInitializer {
             if (DHModConfig.INSTANCE.quadHotbar) {
                 // ========== 四行模式 ==========
                 if (DHModConfig.INSTANCE.holdToSwap) {
-                    boolean ctrlDown = GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS
-                            || GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS;
-
+                    boolean ctrlDown = modifierKeyBinding.isPressed();
                     if (keyBinding.isPressed() != this.hotbarKeys[9]) {
                         this.hotbarKeys[9] = keyBinding.isPressed();
                         if (keyBinding.isPressed()) {
@@ -104,8 +107,7 @@ public class DoubleHotbar implements ClientModInitializer {
                     }
                 } else {
                     while (keyBinding.wasPressed()) {
-                        boolean ctrlDown = GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS
-                                || GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS;
+                        boolean ctrlDown = modifierKeyBinding.isPressed();
                         if (ctrlDown) {
                             performCtrlShortSwap();
                         } else {
@@ -307,9 +309,7 @@ public class DoubleHotbar implements ClientModInitializer {
 
     private void handleQuadHotbarKeybinds(MinecraftClient client) {
         if (client.player == null) return;
-        long windowHandle = client.getWindow().getHandle();
-        boolean ctrlDown = GLFW.glfwGetKey(windowHandle, GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS
-        || GLFW.glfwGetKey(windowHandle, GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS;
+        boolean ctrlDown = modifierKeyBinding.isPressed();
 
         for (int i = 0; i < 9; i++) {
             boolean isPressed = client.options.hotbarKeys[i].isPressed();

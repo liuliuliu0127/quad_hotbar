@@ -66,9 +66,16 @@ public abstract class InGameHudMixin {
 		int bottomY = screenHeight - 21 - DHModConfig.INSTANCE.shift;
 		int topY = bottomY - 21;
 
+		int realHotbarY = bottomY;   // 默认在下面
+		int extraY = topY;           // 额外行在上面
+		if (DHModConfig.INSTANCE.reverseBars) {
+			realHotbarY = topY;
+			extraY = bottomY;
+		}
+
 		// 上半固定行
-		renderHotbarRow(context, tickCounter, player, 18, leftX, topY, false, -1);
-		renderHotbarRow(context, tickCounter, player, 9, rightX, topY, false, -1);
+		renderHotbarRow(context, tickCounter, player, 18, leftX, extraY, false, -1);
+		renderHotbarRow(context, tickCounter, player, 9, rightX, extraY, false, -1);
 
 		// 下半动态行
 		boolean leftReal = DoubleHotbar.leftIsRealHotbar;
@@ -77,14 +84,14 @@ public abstract class InGameHudMixin {
 		int bottomLeftStart = leftReal ? 0 : 27;
 		int bottomRightStart = leftReal ? 27 : 0;
 
-		renderHotbarRow(context, tickCounter, player, bottomLeftStart, leftX, bottomY, leftReal, highlightSlot);
-		renderHotbarRow(context, tickCounter, player, bottomRightStart, rightX, bottomY, !leftReal, highlightSlot);
+		renderHotbarRow(context, tickCounter, player, bottomLeftStart, leftX, realHotbarY, leftReal, highlightSlot);
+		renderHotbarRow(context, tickCounter, player, bottomRightStart, rightX, realHotbarY, !leftReal, highlightSlot);
 
 		// ---- 副手物品绘制（带背景框） ----
 		ItemStack offhand = player.getOffHandStack();
 		if (!offhand.isEmpty()) {
 			int offhandX = leftX - 29;      // 左列左侧 29 像素
-			int offhandY = bottomY + 3;     // 与快捷栏物品垂直对齐
+			int offhandY = realHotbarY + 3;     // 与快捷栏物品垂直对齐
 
 			// 1. 绘制副手槽位背景（24x23）
 			context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HOTBAR_OFFHAND_LEFT_TEXTURE,
@@ -99,7 +106,7 @@ public abstract class InGameHudMixin {
 			float cooldown = player.getAttackCooldownProgress(0.0F);
 			if (cooldown < 1.0F) {
 				int indicatorX = rightX + 182 + 6;  // 右快捷栏右边缘 + 间距
-				int indicatorY = context.getScaledWindowHeight() - 20 - DHModConfig.INSTANCE.shift;
+				int indicatorY = realHotbarY + 3;//context.getScaledWindowHeight() - 20 - DHModConfig.INSTANCE.shift;
 
 				int progressHeight = (int)(cooldown * 19.0F);
 				// 背景 (18x18)

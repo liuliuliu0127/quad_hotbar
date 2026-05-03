@@ -6,6 +6,7 @@
   "text.autoconfig.double_hotbar.option.displayDoubleHotbar": "Show Extra Hotbars",
   "text.autoconfig.double_hotbar.option.quadHotbar": "Quad Hotbar Mode",
   "text.autoconfig.double_hotbar.option.quadHotbar.@Tooltip": "Enable 2×2 quad hotbar layout (disables double row mode)",
+  "key.double_hotbar.modifier": "Quad Hotbar Extra Hotbar Interact HotKey",
   "text.autoconfig.double_hotbar.option.inventoryRow": "Selected Inventory Row (Double HotBar Mode)",
   "text.autoconfig.double_hotbar.option.shift": "Vertical Position",
   "text.autoconfig.double_hotbar.option.allowDoubleTap": "Enable Double Tap",
@@ -14,8 +15,8 @@
   "text.autoconfig.double_hotbar.option.holdToSwap": "Enable Hold to Swap",
   "text.autoconfig.double_hotbar.option.holdTime": "Hold to Swap Time (ms)",
   "text.autoconfig.double_hotbar.option.renderCrop": "Crop Hotbar Height (pixels) (Double HotBar Mode)",
-  "text.autoconfig.double_hotbar.option.holdToSwapBar": "Hold to Swap Entire Bar(s)",
+  "text.autoconfig.double_hotbar.option.holdToSwapBar": "Hold to Swap Entire Bar(s)(Not work with Extra Hotbar Interact HotKey)",
   "text.autoconfig.double_hotbar.option.wooshVolume": "Sound Effect Volume (%)",
-  "text.autoconfig.double_hotbar.option.reverseBars": "Main Hotbar On Top (Double HotBar Mode)",
+  "text.autoconfig.double_hotbar.option.reverseBars": "Main Hotbar On Top",
   "text.autoconfig.double_hotbar.title": "Quad Hotbar Config"
 }
