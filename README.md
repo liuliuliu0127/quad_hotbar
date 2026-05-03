@@ -90,7 +90,7 @@ It retains **all** original Double Hotbar features while adding a new 2×2 quad 
 ### Layout
 
 > Top left: inventory[18..26] | Top right: inventory[9..17]
-> (Bottom left: hotbar (0..8) | Bottom right: inventory[27..35]) or (Bottom right: inventory[27..35] | Bottom left: hotbar (0..8))
+> (Bottom left: hotbar (0..8) | Bottom right: inventory[27..35]) or (Bottom left: inventory[27..35] | Bottom right: hotbar (0..8))
 
 The active row (where the selection highlight appears) switches dynamically between left and right as you scroll or use number keys. When crossing the border, the entire real hotbar is swapped with the bottom inventory row automatically.
 
