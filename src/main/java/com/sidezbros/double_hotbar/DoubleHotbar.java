@@ -93,8 +93,17 @@ public class DoubleHotbar implements ClientModInitializer {
                 }
                 // 双击数字键（四行模式用 swapSlotWithRowBelow）
                 handleQuadHotbarKeybinds(client);
+                //if (client.player != null) {
+                //    client.player.getInventory().setSelectedSlot(extendedHotbarSlot % 9);
+                //}
+                // 同步外部 selectedSlot 变化（服务器/其他模组）
                 if (client.player != null) {
-                    client.player.getInventory().setSelectedSlot(extendedHotbarSlot % 9);
+                    int realSlot = client.player.getInventory().getSelectedSlot();
+                    int expectedSlot = extendedHotbarSlot % 9;
+                    if (realSlot != expectedSlot) {
+                        // 外部修改了选中栏，更新虚拟槽位（保持当前左右侧不变，不触发交换）
+                        extendedHotbarSlot = (leftIsRealHotbar ? 0 : 9) + realSlot;
+                    }
                 }
             } else {
                 // ========== 双行模式（原版逻辑，完全复原） ==========
@@ -332,7 +341,7 @@ public class DoubleHotbar implements ClientModInitializer {
             boolean bIsHotbar = (slotB >= 0 && slotB <= 8);
             if (aIsHotbar != bIsHotbar) { // 一方快捷栏，一方背包
                 int hotbarSlot = aIsHotbar ? slotA : slotB;
-                int inventorySlot = aIsHotbar ? slotB : slotA;
+                //int inventorySlot = aIsHotbar ? slotB : slotA;
                 int screenInventorySlot = aIsHotbar ? screenSlotB : screenSlotA;
                 // SWAP：点击背包槽位，热键栏编号 = hotbarSlot
                 client.interactionManager.clickSlot(syncId, screenInventorySlot, hotbarSlot, SlotActionType.SWAP, client.player);
