@@ -23,7 +23,7 @@
 
 ### 布局说明
 > 左上：背包第3行（18-26） | 右上：背包第2行（9-17）
-> 左下：快捷栏（0-8） | 右下：背包最底层（27-35）
+> （左下：快捷栏（0-8） | 右下：背包最底层（27-35））或（左下：背包最底层（27-35） | 右下：快捷栏（0-8））
 
 活跃行（带有高亮选择框的那一行）会随着滚轮或数字键在左右之间动态切换，并在跨边界时自动置换物品。
 
@@ -90,7 +90,7 @@ It retains **all** original Double Hotbar features while adding a new 2×2 quad 
 ### Layout
 
 > Top left: inventory[18..26] | Top right: inventory[9..17]
-> Bottom left: hotbar (0..8) | Bottom right: inventory[27..35]
+> (Bottom left: hotbar (0..8) | Bottom right: inventory[27..35]) or (Bottom right: inventory[27..35] | Bottom left: hotbar (0..8))
 
 The active row (where the selection highlight appears) switches dynamically between left and right as you scroll or use number keys. When crossing the border, the entire real hotbar is swapped with the bottom inventory row automatically.
 
