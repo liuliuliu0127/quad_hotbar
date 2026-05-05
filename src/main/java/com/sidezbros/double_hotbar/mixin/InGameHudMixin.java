@@ -272,6 +272,7 @@ public abstract class InGameHudMixin {
 				target = "Lnet/minecraft/client/gui/DrawContext;drawTextWithBackground(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;IIII)V"),
 		index = 3)
 	private int fixTooltipYForStatusBars(int originalY) {
+		if (DHModConfig.INSTANCE.disableMod) return originalY;
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.player == null || client.interactionManager == null) return originalY;
 		if (!client.interactionManager.hasStatusBars()) return originalY;
