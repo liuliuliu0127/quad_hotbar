@@ -265,10 +265,12 @@ public abstract class InGameHudMixin {
 
 	//------------------额外功能：修复原版MC状态栏工具提示有时可能和血条或护甲值重合的BUG-------------------------------------
 	
+	// 手持物品名称最大上移量：tooltip 顶部距离状态栏底部最多向上多少像素
+
 	@ModifyArg(method = "renderHeldItemTooltip",
-    at = @At(value = "INVOKE",
-             target = "Lnet/minecraft/client/gui/DrawContext;drawTextWithBackground(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;IIII)V"),
-    index = 3)
+		at = @At(value = "INVOKE",
+				target = "Lnet/minecraft/client/gui/DrawContext;drawTextWithBackground(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;IIII)V"),
+		index = 3)
 	private int fixTooltipYForStatusBars(int originalY) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.player == null || client.interactionManager == null) return originalY;
@@ -277,22 +279,26 @@ public abstract class InGameHudMixin {
 		PlayerEntity player = client.player;
 		int scaledHeight = client.getWindow().getScaledHeight();
 
-		// 计算状态栏顶部（与原版逻辑严格一致）
+		// 状态栏底部 Y 坐标（生命值底部，原版 baseY）
+		int barBottomY = scaledHeight - 39;
+
+		// 计算生命值 + 吸收值所占行数
 		float maxHealth = (float) player.getAttributeValue(EntityAttributes.MAX_HEALTH);
 		float absorption = player.getAbsorptionAmount();
 		int healthRows = MathHelper.ceil((maxHealth + absorption) / 2.0F / 10.0F);
 		int lineHeight = Math.max(10 - (healthRows - 2), 3);
-		int baseY = scaledHeight - 39;
-		int healthTop = baseY - (healthRows - 1) * lineHeight;
+		int healthTop = barBottomY - (healthRows - 1) * lineHeight;
 
+		// 护甲条在生命值上方
 		int armor = player.getArmor();
 		int statusTop = (armor > 0) ? (healthTop - 10) : healthTop;
 
-		int tooltipBottom = originalY + 9;
+		int tooltipBottom = originalY + 9; // 原始 tooltip 底部
 		if (tooltipBottom > statusTop) {
+			// 紧贴状态栏上方
 			int newY = statusTop - 9 - 2;
-			// 限制最高不得超过屏幕高度的 1/1.5（可根据需要调整分母 1.5 为其他数，如 1.3f）
-			int minY = (int) (scaledHeight / 1.3f); 
+			// 限制：不能比 (状态栏底部 - MAX_OFFSET) 更靠上
+			int minY = barBottomY - DHModConfig.INSTANCE.tooltipOffset;
 			if (newY < minY) {
 				newY = minY;
 			}

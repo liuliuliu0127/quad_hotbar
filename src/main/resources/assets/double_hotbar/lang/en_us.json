@@ -17,6 +17,7 @@
   "text.autoconfig.double_hotbar.option.renderCrop": "Crop Hotbar Height (pixels) (Double HotBar Mode)",
   "text.autoconfig.double_hotbar.option.holdToSwapBar": "Hold to Swap Entire Bar(s)(Not work with Extra Hotbar Interact HotKey)",
   "text.autoconfig.double_hotbar.option.wooshVolume": "Sound Effect Volume (%)",
+  "text.autoconfig.double_hotbar.option.tooltipOffset": "Tooltip Max Offset",
   "text.autoconfig.double_hotbar.option.reverseBars": "Main Hotbar On Top",
   "text.autoconfig.double_hotbar.title": "Quad Hotbar Config"
 }

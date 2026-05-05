@@ -51,6 +51,10 @@ public class DHModConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
     public int shift = 0;                          // 整个快捷栏区域向上移动的像素数
 
+    // 手持物品名称最大上移量（相对状态栏底部的像素数），防止与状态栏重叠
+    @ConfigEntry.BoundedDiscrete(min = 0, max = 200)
+    public int tooltipOffset = 40;
+
     // ========== 音效 ==========
     @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
     public int wooshVolume = 100;                   // 交换音效音量
