@@ -292,7 +292,7 @@ public abstract class InGameHudMixin {
 		if (tooltipBottom > statusTop) {
 			int newY = statusTop - 9 - 2;
 			// 限制最高不得超过屏幕高度的 1/1.5（可根据需要调整分母 1.5 为其他数，如 1.3f）
-			int minY = (int) (scaledHeight / 1.4f); 
+			int minY = (int) (scaledHeight / 1.3f); 
 			if (newY < minY) {
 				newY = minY;
 			}
