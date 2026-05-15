@@ -19,5 +19,6 @@
   "text.autoconfig.double_hotbar.option.wooshVolume": "音效音量 (%)",
   "text.autoconfig.double_hotbar.option.tooltipOffset": "手持物品名称最大上移量",
   "text.autoconfig.double_hotbar.option.reverseBars": "主快捷栏置于上方",
-  "text.autoconfig.double_hotbar.title": "四重快捷栏设置"
+  "text.autoconfig.double_hotbar.title": "四重快捷栏设置",
+  "text.autoconfig.double_hotbar.option.debugMode": "调试模式"
 }

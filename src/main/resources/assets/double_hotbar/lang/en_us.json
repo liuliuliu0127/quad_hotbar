@@ -19,5 +19,6 @@
   "text.autoconfig.double_hotbar.option.wooshVolume": "Sound Effect Volume (%)",
   "text.autoconfig.double_hotbar.option.tooltipOffset": "Tooltip Max Offset",
   "text.autoconfig.double_hotbar.option.reverseBars": "Main Hotbar On Top",
-  "text.autoconfig.double_hotbar.title": "Quad Hotbar Config"
+  "text.autoconfig.double_hotbar.title": "Quad Hotbar Config",
+  "text.autoconfig.double_hotbar.option.debugMode": "Debug Mode"
 }

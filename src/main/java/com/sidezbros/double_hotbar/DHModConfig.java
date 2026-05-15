@@ -58,4 +58,6 @@ public class DHModConfig implements ConfigData {
     // ========== 音效 ==========
     @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
     public int wooshVolume = 100;                   // 交换音效音量
+    // ========== Debug 功能 ==========
+    public boolean debugMode = false;       // 开启物品栏槽位编号显示与槽位交换工具
 }
