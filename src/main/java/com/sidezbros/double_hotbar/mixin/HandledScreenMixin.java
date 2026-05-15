@@ -86,10 +86,7 @@ public abstract class HandledScreenMixin extends Screen {
             screenSlotB < 0 || screenSlotB >= handler.slots.size()) {
             return;
         }
-
-        client.interactionManager.clickSlot(handler.syncId, screenSlotA, 0, SlotActionType.PICKUP, client.player);
-        client.interactionManager.clickSlot(handler.syncId, screenSlotB, 0, SlotActionType.PICKUP, client.player);
-        client.interactionManager.clickSlot(handler.syncId, screenSlotA, 0, SlotActionType.PICKUP, client.player);
+        client.interactionManager.clickSlot(handler.syncId, screenSlotB, screenSlotA, SlotActionType.SWAP, client.player);
     }
 
     @Inject(method = "render", at = @At("TAIL"))
