@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Arm;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -59,6 +60,7 @@ public abstract class InGameHudMixin {
 		PlayerEntity player = getCameraPlayer();
 		if (player == null||DHModConfig.INSTANCE.disableMod) return;
 
+		boolean leftHanded = player.getMainArm() == Arm.LEFT;
 		int screenWidth = context.getScaledWindowWidth();
 		int screenHeight = context.getScaledWindowHeight();
 
@@ -94,22 +96,36 @@ public abstract class InGameHudMixin {
 		// ---- 副手物品绘制（带背景框） ----
 		ItemStack offhand = player.getOffHandStack();
 		if (!offhand.isEmpty()) {
-			int offhandX = leftX - 29;      // 左列左侧 29 像素
-			int offhandY = realHotbarY + 3;     // 与快捷栏物品垂直对齐
+			//int offhandX = leftX - 29;      // 左列左侧 29 像素
+			// 副手位置
+			int offhandX;
+			if (leftHanded) {
+				offhandX = rightX + 182 + 9; // 右列右侧，间距9
+			} else {
+				offhandX = leftX - 29;           // 原位置
+			}
+			int offhandY = realHotbarY + 5;     // 与快捷栏物品垂直对齐
 
-			// 1. 绘制副手槽位背景（24x23）
+			// 1. 绘制副手槽位背景（29x24）
 			context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, HOTBAR_OFFHAND_LEFT_TEXTURE,
-					offhandX - 1, offhandY - 3, 24, 23);
+					offhandX - 1, offhandY - 6, 29, 24);
 
 			// 2. 绘制副手物品
-			renderHotbarItem(context, offhandX, offhandY, tickCounter, player, offhand, 0);
+			renderHotbarItem(context, offhandX+2, offhandY-2, tickCounter, player, offhand, 0);
 		}
 		// ---- 攻击指示器（进度条模式）绘制 ----
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.options.getAttackIndicator().getValue() == AttackIndicator.HOTBAR) {
 			float cooldown = player.getAttackCooldownProgress(0.0F);
 			if (cooldown < 1.0F) {
-				int indicatorX = rightX + 182 + 6;  // 右快捷栏右边缘 + 间距
+				//int indicatorX = rightX + 182 + 6;  // 右快捷栏右边缘 + 间距
+				// 攻击指示器位置（进度条模式）
+				int indicatorX;
+				if (leftHanded) {
+					indicatorX = leftX - 26;
+				} else {
+					indicatorX = rightX + 182 + 6;   // 原位置
+				}
 				int indicatorY = realHotbarY + 3;//context.getScaledWindowHeight() - 20 - DHModConfig.INSTANCE.shift;
 
 				int progressHeight = (int)(cooldown * 19.0F);
