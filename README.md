@@ -3,7 +3,7 @@
 # 四重快捷栏 (Quad Hotbar)
 
 > 魔改了双重快捷栏模组使其支持4重快捷栏的显示与快捷交互.  
-> 目前支持我的世界 1.21.9–1.21.11 版本
+> 目前支持我的世界 1.21.9–26.1.2 版本
 
 **四重快捷栏 (Quad Hotbar)** 是双重快捷栏 (Double Hotbar) 模组的一个分支版本，灵感来源于 多重快捷栏、忄夬扌疌木兰 及 HyskLongHotbar 模组。  
 本模组**完整保留**了原双重快捷栏的全部功能，并新增了**2×2 四重快捷栏布局**——相当于两个双重快捷栏并排，屏幕底部最多同时显示 18 个物品格子。
@@ -69,7 +69,7 @@
 # Quad Hotbar
 
 > Modified double hotbar mod that expands the HUD for more than 2 rows of hotbar.  
-> Currently supports Minecraft 1.21.9–1.21.11
+> Currently supports Minecraft 1.21.9–26.1.2
 
 **Quad Hotbar** is a fork of the Double Hotbar mod, inspired by Multi Hotbar, Hot Baaaar, and Hysk LongHotbar.  
 It retains **all** original Double Hotbar features while adding a new 2×2 quad hotbar layout – essentially two double hotbars side by side, giving you 18 visible inventory slots at the bottom of the screen.
