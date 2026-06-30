@@ -69,7 +69,7 @@
 # Quad Hotbar
 
 > Modified double hotbar mod that expands the HUD for more than 2 rows of hotbar.  
-> Currently supports Minecraft 1.21.9–1.21.11
+> Currently supports Minecraft 1.21.9–26.1.2
 
 **Quad Hotbar** is a fork of the Double Hotbar mod, inspired by Multi Hotbar, Hot Baaaar, and Hysk LongHotbar.  
 It retains **all** original Double Hotbar features while adding a new 2×2 quad hotbar layout – essentially two double hotbars side by side, giving you 18 visible inventory slots at the bottom of the screen.
