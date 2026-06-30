@@ -3,8 +3,8 @@
   "id": "double_hotbar",
   "version": "${version}",
 
-  "name": "Quad Hotbar",
-  "description": "Modified version of Double Hotbar Mod which adds more than two hotbars that displays the third row of the inventory on the HUD. ",
+  "name": "Quad_Hotbar",
+  "description": "Modified version of Double Hotbar Mod which adds a 2×2 quad hotbar layout displaying more inventory rows on the HUD. Supports Ctrl+scroll navigation, hold/double-tap swap mechanics, and configurable hotbar positioning.",
   "authors": [
     "sidezbros",
     "liuliuliu0127",
@@ -33,9 +33,9 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.17.3",
+    "fabricloader": ">=0.19.2",
     "fabric-api": "*",
-    "minecraft": "~1.21.9",
-    "java": ">=21"
+    "minecraft": "~26.1.2",
+    "java": ">=25"
   }
 }

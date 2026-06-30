@@ -9,55 +9,56 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 @Config(name = "double_hotbar")
 public class DHModConfig implements ConfigData {
 
-    @ConfigEntry.Gui.Excluded
-    public static DHModConfig INSTANCE;
+	@ConfigEntry.Gui.Excluded
+	public static DHModConfig INSTANCE;
 
-    public static void init() {
-        AutoConfig.register(DHModConfig.class, JanksonConfigSerializer::new);
-        INSTANCE = AutoConfig.getConfigHolder(DHModConfig.class).getConfig();
-    }
+	public static void init() {
+		AutoConfig.register(DHModConfig.class, JanksonConfigSerializer::new);
+		INSTANCE = AutoConfig.getConfigHolder(DHModConfig.class).getConfig();
+	}
 
-    // ========== 全局开关 ==========
-    public boolean disableMod = false;
+	// ========== Global toggle ==========
+	public boolean disableMod = false;
 
-    // ========== 四行模式（2×2）专属 ==========
-    @ConfigEntry.Gui.Tooltip
-    public boolean quadHotbar = true;               // 启用 2×2 四行快捷栏；关闭后恢复原版双行模式
+	// ========== Quad mode (2×2) exclusive ==========
+	@ConfigEntry.Gui.Tooltip
+	public boolean quadHotbar = true;               // Enable 2×2 quad hotbar layout
 
-    // ========== 原版双行模式设置（quadHotbar=false 时有效） ==========
-    @ConfigEntry.BoundedDiscrete(min = 1, max = 3)
-    public int inventoryRow = 3;                    // 额外显示的行（1=背包第一行，3=背包最后一行）
+	// ========== Double-row mode settings (effective when quadHotbar=false) ==========
+	@ConfigEntry.BoundedDiscrete(min = 1, max = 3)
+	public int inventoryRow = 3;                    // Which inventory row to display as second hotbar
 
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 22)
-    public int renderCrop = 0;                      // 裁剪底部像素（双行模式用）
+	@ConfigEntry.BoundedDiscrete(min = 0, max = 22)
+	public int renderCrop = 0;                      // Crop pixels from second hotbar frame
 
-    public boolean reverseBars = false;             // 交换底部两行与状态栏的位置
+	public boolean reverseBars = false;             // Swap main hotbar and second hotbar positions
 
-    // ========== 按键与交互 ==========
-    public boolean holdToSwap = true;               // 启用按住 R 键交换
-    public boolean holdToSwapBar = false;           // 长按 R 时交换整行
-    public boolean allowDoubleTap = true;           // 允许双击数字键交换单格
-    public boolean useSwapForHotbar = true;         // 对涉及快捷栏的交换使用 SWAP（修复服务器空位失败），关闭则用原版 PICKUP
+	// ========== Key bindings & interaction ==========
+	public boolean holdToSwap = true;               // Enable hold-to-swap mode
+	public boolean holdToSwapBar = false;           // Long-press R to swap entire row
+	public boolean allowDoubleTap = true;           // Enable double-tap number key swap
+	public boolean useSwapForHotbar = true;         // Use SWAP for hotbar exchanges (fixes server empty-slot failures)
 
-    @ConfigEntry.BoundedDiscrete(min = 50, max = 1000)
-    public int holdTime = 200;                      // 长按判定时间（毫秒）
+	@ConfigEntry.BoundedDiscrete(min = 50, max = 1000)
+	public int holdTime = 200;                      // Hold threshold (ms)
 
-    @ConfigEntry.BoundedDiscrete(min = 150, max = 600)
-    public int doubleTapWindow = 300;               // 双击判定窗口（毫秒）
+	@ConfigEntry.BoundedDiscrete(min = 150, max = 600)
+	public int doubleTapWindow = 300;               // Double-tap window (ms)
 
-    // ========== 视觉 ==========
-    public boolean displayDoubleHotbar = true;     // 是否显示额外的快捷栏（双行或四行都受此控制）
+	// ========== Visual ==========
+	public boolean displayDoubleHotbar = true;      // Show extra hotbars (quad or double)
 
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
-    public int shift = 0;                          // 整个快捷栏区域向上移动的像素数
+	@ConfigEntry.BoundedDiscrete(min = 0, max = 100)
+	public int shift = 0;                           // Pixel shift for entire hotbar area
 
-    // 手持物品名称最大上移量（相对状态栏底部的像素数），防止与状态栏重叠
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 200)
-    public int tooltipOffset = 40;
+	// Maximum upward offset for held item tooltip (prevents overlap with status bars)
+	@ConfigEntry.BoundedDiscrete(min = 0, max = 200)
+	public int tooltipOffset = 40;
 
-    // ========== 音效 ==========
-    @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
-    public int wooshVolume = 100;                   // 交换音效音量
-    // ========== Debug 功能 ==========
-    public boolean debugMode = false;       // 开启物品栏槽位编号显示与槽位交换工具
+	// ========== Sound ==========
+	@ConfigEntry.BoundedDiscrete(min = 0, max = 100)
+	public int wooshVolume = 100;                   // Swap sound volume
+
+	// ========== Debug ==========
+	public boolean debugMode = false;               // Show slot numbers on container screens + slot swap tool
 }
